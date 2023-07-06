@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 def canUnlockAll(boxes):
   # Initialize a set with the key for the first box
   keys = {0}
