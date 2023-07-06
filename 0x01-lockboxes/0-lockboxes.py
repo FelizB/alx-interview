@@ -1,14 +1,21 @@
 #!/usr/bin/python3
 
 def canUnlockAll(boxes):
-    n = len(boxes)
-    seen_boxes = set([0])
-    unseen_boxes = set(boxes[0]).difference(set([0]))
-    while len(unseen_boxes) > 0:
-        boxIdx = unseen_boxes.pop()
-        if not boxIdx or boxIdx >= n or boxIdx < 0:
-            continue
-        if boxIdx not in seen_boxes:
-            unseen_boxes = unseen_boxes.union(boxes[boxIdx])
-            seen_boxes.add(boxIdx)
-    return n == len(seen_boxes)
+  # Initialize a set with the key for the first box
+  keys = {0}
+  # Loop until there are no more keys to try
+  while True:
+    # Keep track of the keys added in this iteration
+    new_keys = set()
+    # Loop through all the boxes
+    for i, box in enumerate(boxes):
+      # If we have the key for this box, add its keys to the new_keys set
+      if i in keys:
+        new_keys.update(box)
+    # If no new keys were added, we are done
+    if not new_keys - keys:
+      break
+    # Otherwise, update the keys set and continue
+    keys.update(new_keys)
+  # Return True if we have keys for all the boxes, False otherwise
+  return len(keys) == len(boxes)
